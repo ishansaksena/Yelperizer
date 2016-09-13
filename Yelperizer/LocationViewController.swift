@@ -6,15 +6,25 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+/*
+ Simple view controller to get the location for the search
+ */
+
 import UIKit
 
-class LocationViewController: UIViewController {
+class LocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var locationTextField: UITextField!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        locationTextField.delegate = self
+        self.locationTextField.becomeFirstResponder()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        self.locationTextField.becomeFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,6 +32,17 @@ class LocationViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldDidEndEditing(textField: UITextField) {
+        search.location = textField.text
+        //yelpRouter.getData()
+        sleep(5)
+        
+        let results = UIStoryboard(name: "Main", bundle: nil) .
+            instantiateViewControllerWithIdentifier("ResultsNavigationController")
+            
+        
+        showViewController(results, sender: self)
+    }
 
     /*
     // MARK: - Navigation
