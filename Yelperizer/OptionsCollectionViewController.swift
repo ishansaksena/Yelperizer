@@ -39,7 +39,6 @@ class OptionsCollectionViewController: UICollectionViewController {
         // Do any additional setup after loading the view.
         // Load 4 initial options
         setDefaultOptions()
-        let yelpRouter = YelpRouter()
     }
 
     override func didReceiveMemoryWarning() {
@@ -86,28 +85,38 @@ class OptionsCollectionViewController: UICollectionViewController {
     }
 
     // MARK: UICollectionViewDelegate
-
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print("Party on! \(indexPath.row)")
         switch indexPath.row {
         case 0:// Create new group
             print("Creating new group")
+            create = true
+            let searchController = UIStoryboard(name: "Main", bundle: nil) .
+                instantiateViewControllerWithIdentifier("SearchPageViewController")
+            self.navigationController?.pushViewController(searchController, animated: true)
             
         case 1:// Join Group
             print("Join group")
+            let vc = UIStoryboard(name: "Main", bundle: nil) .
+                instantiateViewControllerWithIdentifier("FindGroupViewController")
+            self.navigationController?.pushViewController(vc, animated: true)
             
         case 2:// Login again?
             print("Login again?")
             let vc = UIStoryboard(name: "Main", bundle: nil) .
                 instantiateViewControllerWithIdentifier("SignInViewController")
-            presentViewController(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         case 3:// Logout
             print("Logout")
+            self.signOut()
+            
         case 4:// Search
             print("Search")
             let vc = UIStoryboard(name: "Main", bundle: nil) .
                 instantiateViewControllerWithIdentifier("SearchPageViewController")
-            presentViewController(vc, animated: true, completion: nil)
+            self.navigationController?.pushViewController(vc, animated: true)
+            
         default:
             print("Invalid option selected from initial options")
         }
@@ -143,9 +152,10 @@ class OptionsCollectionViewController: UICollectionViewController {
     */
     
     // MARK: Firebase
-    func signOut(sender: UIButton) {
+    func signOut() {
         let firebaseAuth = FIRAuth.auth()
         do {
+            print("Signing out")
             try firebaseAuth?.signOut()
             AppState.sharedInstance.signedIn = false
             dismissViewControllerAnimated(true, completion: nil)

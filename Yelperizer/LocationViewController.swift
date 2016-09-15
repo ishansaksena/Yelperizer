@@ -15,12 +15,14 @@ import UIKit
 class LocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var locationTextField: UITextField!
+    var yelpRouter: YelpRouter!
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         locationTextField.delegate = self
-        self.locationTextField.becomeFirstResponder()
+        //self.locationTextField.becomeFirstResponder()
+        yelpRouter = YelpRouter()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -33,15 +35,18 @@ class LocationViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
+        
+    }
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         search.location = textField.text
-        //yelpRouter.getData()
-        sleep(5)
+        yelpRouter.getData()
         
         let results = UIStoryboard(name: "Main", bundle: nil) .
-            instantiateViewControllerWithIdentifier("ResultsNavigationController")
-            
+            instantiateViewControllerWithIdentifier("ResultsTableViewController")
         
-        showViewController(results, sender: self)
+        self.navigationController?.pushViewController(results, animated: true)
+        return false
     }
 
     /*

@@ -34,15 +34,14 @@ class SearchTermViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        print("Pressed return on search term ")
         NSNotificationCenter.defaultCenter().postNotificationName("enteredSearchTerm", object: nil)
-        searchTermTextField.resignFirstResponder()
+        //searchTermTextField.resignFirstResponder()
         return false
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        searchTermTextField.resignFirstResponder()
+        //searchTermTextField.resignFirstResponder()
     }
     
 

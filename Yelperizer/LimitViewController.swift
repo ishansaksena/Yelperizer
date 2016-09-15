@@ -20,7 +20,7 @@ class LimitViewController: UIViewController, UITextFieldDelegate {
 
         // Do any additional setup after loading the view.
         limitTextField.delegate = self
-        self.limitTextField.becomeFirstResponder()
+        //self.limitTextField.becomeFirstResponder()
         
         //Add done button to numeric pad keyboard
         let toolbarDone = UIToolbar.init()
@@ -34,9 +34,8 @@ class LimitViewController: UIViewController, UITextFieldDelegate {
 
     }
     func nextPage() {
-        print("transmit to go to third page")
         NSNotificationCenter.defaultCenter().postNotificationName("enteredLimit", object: nil)
-        limitTextField.resignFirstResponder()
+        //limitTextField.resignFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -47,7 +46,6 @@ class LimitViewController: UIViewController, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         if !(textField.text?.isEmpty)! {
             search.limit = Int(textField.text!)
-            print(search.limit)
         }
     }
 

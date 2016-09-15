@@ -14,6 +14,7 @@ struct Search {
     var location: String?
     var limit: Int?
     var results: JSON?
+    var resultsReceived: Int?
 }
 
 var search = Search()
