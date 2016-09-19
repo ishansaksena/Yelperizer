@@ -15,6 +15,16 @@ struct Search {
     var limit: Int?
     var results: JSON?
     var resultsReceived: Int?
+    var votesReceived = [String: Int]()
+    var imageURLs = [String: UIImage]()
+    var currentMode = mode.none
 }
 
 var search = Search()
+
+enum mode {
+    case create
+    case find
+    case search
+    case none
+}

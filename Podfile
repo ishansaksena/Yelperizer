@@ -7,6 +7,7 @@ target 'Yelperizer' do
 
   # Pods for Yelperizer
   pod 'Alamofire', '~> 3.4'
+  pod 'AlamofireImage'
   pod 'SwiftyJSON'
   pod 'Firebase'
   pod 'FirebaseAuth'

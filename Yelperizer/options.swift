@@ -16,7 +16,7 @@ struct option {
 var options = [option]()
 
 func setDefaultOptions() {
-    options.append(option(icon: "➕", actions: "Create new"))
+    options.append(option(icon: "➕", actions: "Create"))
     options.append(option(icon: "😌", actions: "Join"))
     options.append(option(icon: "🐼|🐭", actions: "Not you?"))
     options.append(option(icon: "🚀", actions: "Logout"))

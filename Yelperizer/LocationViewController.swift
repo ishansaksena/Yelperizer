@@ -34,10 +34,6 @@ class LocationViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func textFieldDidEndEditing(textField: UITextField) {
-        
-    }
-    
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         search.location = textField.text
         yelpRouter.getData()

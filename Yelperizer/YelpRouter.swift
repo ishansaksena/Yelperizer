@@ -9,12 +9,13 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
+import AlamofireImage
 
 class YelpRouter {
     // Mark: Oauth 2.0 and API calls
     // Remove before committing
-    private let appID = ""
-    private let appSecret = ""
+    private let appID = "cv9vZ51g3si7Yftaj6AVOQ"
+    private let appSecret = "URLWbu0dNOKw7L2qIjSL3X5bsYRJO5i01dXgXBf2miE2zUPQak7DRnAGEmLmmQFt"
     let searchURL = "https://api.yelp.com/v3/businesses/search?"
     
     private var accessToken: String?
@@ -115,8 +116,35 @@ class YelpRouter {
                     search.results = searchResults
                     search.resultsReceived = searchResults["businesses"].count
                     
+                    for i in 0...(search.resultsReceived! - 1) {
+                        // Setting votes
+                        let business = search.results!["businesses"][i]
+                        search.votesReceived[business["id"].stringValue] = 0
+                        
+                        // Getting images
+                        let imageURL = business["image_url"].stringValue
+                        
+                        Alamofire.request(.GET, imageURL, parameters: [:], headers: [:])
+                            .responseImage { response in
+                            
+                            switch response.result {
+                            case .Success:
+                                if let image = response.result.value {
+                                    //print("image downloaded: \(image)")
+                                    search.imageURLs[business["id"].stringValue] = image
+                                    
+                                    // Data received
+                                    NSNotificationCenter.defaultCenter().postNotificationName("receivedSearchData", object: nil)
+                                }
+                            case .Failure:
+                                debugPrint(response)
+                                print(response.request)
+                                print(response.response)
+                                debugPrint(response.result)
+                            }
+                        }
+                    }
                     // To remove loading screen and reload results table view
-                    NSNotificationCenter.defaultCenter().postNotificationName("receivedSearchData", object: nil)
                 case .Failure(let error):
                     print(error)
                 }

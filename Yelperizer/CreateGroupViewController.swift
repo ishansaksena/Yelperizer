@@ -8,16 +8,18 @@
 
 import UIKit
 
-var create = false
-
 class CreateGroupViewController: UIViewController {
 
     @IBOutlet weak var codeTextField: UILabel!
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        codeTextField.text = currentKey
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,7 +30,15 @@ class CreateGroupViewController: UIViewController {
     @IBAction func copyToClipBoard(sender: AnyObject) {
         UIPasteboard.generalPasteboard().string = codeTextField.text
     }
-
+    
+    
+    @IBAction func share(sender: AnyObject) {
+        let code = codeTextField.text
+        let activityViewController = UIActivityViewController(activityItems: [code!], applicationActivities: nil)
+        self.navigationController?.presentViewController(activityViewController, animated: true) {
+            // ...
+        }
+    }
     /*
     // MARK: - Navigation
 

@@ -78,8 +78,8 @@ class OptionsCollectionViewController: UICollectionViewController {
         cell.action.text = options[indexPath.row].actions
         
         // Appearance
-        cell.layer.borderColor = UIColor.grayColor().CGColor
-        cell.layer.borderWidth = 1
+        cell.layer.borderColor = UIColor.whiteColor().CGColor
+        cell.layer.borderWidth = 2
         cell.layer.cornerRadius = 45
         return cell
     }
@@ -90,7 +90,7 @@ class OptionsCollectionViewController: UICollectionViewController {
         switch indexPath.row {
         case 0:// Create new group
             print("Creating new group")
-            create = true
+            search.currentMode = mode.create
             let searchController = UIStoryboard(name: "Main", bundle: nil) .
                 instantiateViewControllerWithIdentifier("SearchPageViewController")
             self.navigationController?.pushViewController(searchController, animated: true)
@@ -155,10 +155,17 @@ class OptionsCollectionViewController: UICollectionViewController {
     func signOut() {
         let firebaseAuth = FIRAuth.auth()
         do {
-            print("Signing out")
             try firebaseAuth?.signOut()
             AppState.sharedInstance.signedIn = false
-            dismissViewControllerAnimated(true, completion: nil)
+            let alertController = UIAlertController(title: "Ciao!",
+                                                    message: "You're all signed out!",
+                                                    preferredStyle: UIAlertControllerStyle.Alert)
+            let okAction = UIAlertAction(title: "OK",
+                                         style: UIAlertActionStyle.Default) { (result : UIAlertAction) -> Void in
+                print("Signed out")
+            }
+            alertController.addAction(okAction)
+            self.presentViewController(alertController, animated: true, completion: nil)
         } catch let signOutError as NSError {
             print ("Error signing out: \(signOutError)")
         }

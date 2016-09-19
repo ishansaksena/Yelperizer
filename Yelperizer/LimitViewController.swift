@@ -34,6 +34,7 @@ class LimitViewController: UIViewController, UITextFieldDelegate {
 
     }
     func nextPage() {
+        
         NSNotificationCenter.defaultCenter().postNotificationName("enteredLimit", object: nil)
         //limitTextField.resignFirstResponder()
     }
@@ -45,8 +46,21 @@ class LimitViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         if !(textField.text?.isEmpty)! {
-            search.limit = Int(textField.text!)
+            if Int(textField.text!) != nil {
+                search.limit = Int(textField.text!)
+            } else {
+                search.limit = 10
+            }
+        } else {
+            search.limit = 10
         }
+    }
+    
+    // Just for testing in the simulator
+    // No return button on numpad
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        nextPage()
+        return false
     }
 
     /*

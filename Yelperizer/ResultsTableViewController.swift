@@ -20,13 +20,17 @@ class ResultsTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         // Make bar visible
         self.navigationController?.navigationBarHidden = false
-        self.navigationController?.navigationBar.topItem?.title = "Results"
-        if create {
+        let titleImage = UIImage(named: "yelp_review_btn_dark")
+        let titleImageView = UIImageView(image: titleImage)
+        self.navigationItem.titleView = titleImageView
+        if search.currentMode == .create {
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Done,
                                                                                        target: self,
                                                                                        action: #selector(ResultsTableViewController.code))
-            create = false
+            search.currentMode = mode.none
+            self.firebase.addGroup()
         }
+        
     }
     
     func code() {
@@ -97,7 +101,8 @@ class ResultsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchResultCell", forIndexPath: indexPath) as! SearchResultCell
 
         // Configure the cell...
-        cell.setFor(search.results!["businesses"][indexPath.row])
+        let business = search.results!["businesses"][indexPath.row]
+        cell.setFor(business)
         return cell
     }
  
@@ -128,20 +133,18 @@ class ResultsTableViewController: UITableViewController {
         let upVote = UITableViewRowAction(style: .Normal, title: "Upvote") { action, index in
             let business = search.results!["businesses"][indexPath.row]["id"].stringValue
             print("upvoted \(indexPath.row) that's the business \(business)")
-            var vote = [String: String]()
-            vote[business] = "upvote"
-            self.firebase.sendMessage(vote)
-            
+            search.votesReceived[business] = 1
+            self.firebase.sendVotes()
+            self.tableView.reloadData()
         }
         upVote.backgroundColor = UIColor.orangeColor()
         
         let downVote = UITableViewRowAction(style: .Normal, title: "Downvote") { action, index in
-            print("downvoted \(indexPath.row)")
             let business = search.results!["businesses"][indexPath.row]["id"].stringValue
-            print("upvoted \(indexPath.row) that's the business \(business)")
-            var vote = [String: String]()
-            vote[business] = "downvote"
-            self.firebase.sendMessage(vote)
+            print("downvoted \(indexPath.row) that's the business \(business)")
+            search.votesReceived[business] = -1
+            self.firebase.sendVotes()
+            self.tableView.reloadData()
         }
         downVote.backgroundColor = UIColor.redColor()
         
