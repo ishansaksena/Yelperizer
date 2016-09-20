@@ -123,6 +123,11 @@ class YelpRouter {
                         let business = search.results!["businesses"][i]
                         search.votesReceived[business["id"].stringValue] = 0
                         
+                        if search.currentMode == mode.find {
+                            let firebase = FireBaseManager()
+                            firebase.getVotes()
+                        }
+                        
                         // Getting images
                         let imageURL = business["image_url"].stringValue
                         

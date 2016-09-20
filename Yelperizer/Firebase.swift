@@ -37,6 +37,28 @@ class FireBaseManager {
             print(search)
             yelpRouter = YelpRouter()
             yelpRouter.getData()
+            
+            
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+    }
+    
+    // Fetch votes under the current key
+    func getVotes() {
+        self.ref.child("votes").child(currentKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
+            // Get votes
+            print()
+            print(snapshot)
+            print(search.votesReceived)
+            for name in search.votesReceived.keys {
+                search.votesReceived[name] = (snapshot.value![name]) as? Int
+                let vote = (snapshot.value![name]) as? Int
+                print(vote!)
+            }
+            // Data received
+            NSNotificationCenter.defaultCenter().postNotificationName("receivedSearchData", object: nil)
+            print()
         }) { (error) in
             print(error.localizedDescription)
         }
@@ -56,6 +78,7 @@ class FireBaseManager {
                 let key = search.results!["businesses"][i]["id"].stringValue
                 search.votesReceived[key]! += snapshot.value![key] as! Int
             }
+            self.sendVotes()
         })
     }
     
