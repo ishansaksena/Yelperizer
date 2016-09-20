@@ -29,19 +29,17 @@ class FireBaseManager {
     func getGroup() {
         ref.child("groups").child(currentKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
             // Get search parameters
-            /*search.searchTerm = snapshot.value!["searchTerm"] as? String
-            search.limit = snapshot.value!["limit"] as? Int
+            search.searchTerm = snapshot.value!["searchTerm"] as? String
+            let limit = snapshot.value!["limit"] as? String
+            search.limit = Int(limit!)
             search.location = snapshot.value!["location"] as? String
             // ...
-            print(search)*/
-            print(snapshot)
+            print(search)
+            yelpRouter = YelpRouter()
             yelpRouter.getData()
         }) { (error) in
             print(error.localizedDescription)
         }
-        print("Done setting up")
-        let childUpdates = ["/wtf": "wtf"]
-        ref.updateChildValues(childUpdates)
     }
     
     // Set reference and set up listeners
@@ -70,7 +68,7 @@ class FireBaseManager {
     
     // Write to Firebase database
     func addGroup() {
-        let limit = String(search.limit)
+        let limit = String(search.limit!)
         var groupData = ["searchTerm": search.searchTerm!, "location": search.location!, "limit":limit]
         
         groupData[Constants.MessageFields.name] = AppState.sharedInstance.displayName
