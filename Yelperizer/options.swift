@@ -6,6 +6,8 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Options available on the landing page
+
 import Foundation
 
 struct option {

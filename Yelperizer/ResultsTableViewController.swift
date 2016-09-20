@@ -8,6 +8,7 @@
 
 /*
  Display Yelp search results, redirect to yelp app and take in votes
+ Uses SearchResultCell
  */
 
 import UIKit
@@ -159,7 +160,9 @@ class ResultsTableViewController: UITableViewController {
             }
         }
         share.backgroundColor = UIColor.blueColor()
-        
+        if search.currentMode == mode.search {
+            return [share]
+        }
         return [share, downVote, upVote]
     }
     

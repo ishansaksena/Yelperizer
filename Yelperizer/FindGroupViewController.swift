@@ -6,6 +6,8 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Fetch existing group from Firebase
+
 import UIKit
 
 class FindGroupViewController: UIViewController, UITextFieldDelegate {

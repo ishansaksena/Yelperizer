@@ -6,6 +6,10 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// New search and create a new group
+// New branch in firebase
+// new code at the end of the search
+
 import UIKit
 
 class CreateGroupViewController: UIViewController {

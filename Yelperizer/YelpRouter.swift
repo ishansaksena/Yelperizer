@@ -6,6 +6,8 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Handles all of the Yelp API interactions
+
 import Foundation
 import Alamofire
 import SwiftyJSON
@@ -35,9 +37,9 @@ class YelpRouter {
     init() {
         let date = NSDate()
         let defaults = NSUserDefaults.standardUserDefaults()
-        if (initializeWithDefaults()) {
+        if (initializeWithDefaults()) {// Stored credentials are valid
             print("Initialized from user defaults")
-        } else {
+        } else {// Request new credentials
             print("Initialized")
             Alamofire.request(.POST, "https://api.yelp.com/oauth2/token",
                 parameters: ["grant_type": "client_credentials",

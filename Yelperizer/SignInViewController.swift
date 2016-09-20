@@ -111,6 +111,7 @@ class SignInViewController: UIViewController, UITextFieldDelegate {
         AppState.sharedInstance.photoUrl = user?.photoURL
         AppState.sharedInstance.signedIn = true
         NSNotificationCenter.defaultCenter().postNotificationName(Constants.NotificationKeys.SignedIn, object: nil, userInfo: nil)
+        self.navigationController?.popViewControllerAnimated(true)
         //performSegueWithIdentifier(Constants.Segues.SignInToFp, sender: nil)
     }
     /*

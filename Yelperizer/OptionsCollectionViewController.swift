@@ -25,6 +25,15 @@ class OptionsCollectionViewController: UICollectionViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBar.topItem!.title = "Yelperizer"
+        let login = FIRAuth.auth()?.currentUser?.displayName
+        print()
+        print("The current user is: ", login)
+        print()
+        if login == nil {
+            let vc = UIStoryboard(name: "Main", bundle: nil) .
+                instantiateViewControllerWithIdentifier("SignInViewController")
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     override func viewDidLoad() {
@@ -114,6 +123,7 @@ class OptionsCollectionViewController: UICollectionViewController {
             
         case 4:// Search
             print("Search")
+            search.currentMode = mode.search
             let vc = UIStoryboard(name: "Main", bundle: nil) .
                 instantiateViewControllerWithIdentifier("SearchPageViewController")
             self.navigationController?.pushViewController(vc, animated: true)

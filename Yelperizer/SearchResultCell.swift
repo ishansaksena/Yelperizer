@@ -6,6 +6,9 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Cell to display each search result from Yelp
+// Used by ResultsTableViewController
+
 import UIKit
 import SwiftyJSON
 

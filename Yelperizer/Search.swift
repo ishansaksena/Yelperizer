@@ -6,6 +6,8 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Store all search related parameters and results
+
 import Foundation
 import SwiftyJSON
 

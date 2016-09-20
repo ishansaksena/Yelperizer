@@ -6,6 +6,8 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Handles all interactions with Firebase
+
 import Foundation
 import Firebase
 import FirebaseDatabase
@@ -25,6 +27,7 @@ class FireBaseManager {
         self.ref.child("messages").removeObserverWithHandle(_refHandle)
     }
     
+    // Used when user chooses find group
     // Fetch search parameters and votes with the group ID
     func getGroup() {
         ref.child("groups").child(currentKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
@@ -44,21 +47,16 @@ class FireBaseManager {
         }
     }
     
+    // Used when the user chooses find group
     // Fetch votes under the current key
     func getVotes() {
         self.ref.child("votes").child(currentKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
             // Get votes
-            print()
-            print(snapshot)
-            print(search.votesReceived)
             for name in search.votesReceived.keys {
                 search.votesReceived[name] = (snapshot.value![name]) as? Int
-                let vote = (snapshot.value![name]) as? Int
-                print(vote!)
             }
             // Data received
             NSNotificationCenter.defaultCenter().postNotificationName("receivedSearchData", object: nil)
-            print()
         }) { (error) in
             print(error.localizedDescription)
         }

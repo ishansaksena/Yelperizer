@@ -6,6 +6,9 @@
 //  Copyright © 2016 ishansaksena. All rights reserved.
 //
 
+// Cell to display available options
+// Used by OptionsCollectionsViewController
+
 import UIKit
 
 class OptionCollectionViewCell: UICollectionViewCell {
