@@ -97,6 +97,7 @@ class OptionsCollectionViewController: UICollectionViewController {
             
         case 1:// Join Group
             print("Join group")
+            
             let vc = UIStoryboard(name: "Main", bundle: nil) .
                 instantiateViewControllerWithIdentifier("FindGroupViewController")
             self.navigationController?.pushViewController(vc, animated: true)

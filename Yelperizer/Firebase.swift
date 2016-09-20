@@ -54,13 +54,10 @@ class FireBaseManager {
             print("Snapshot received")
             //print(self.snaps)
             print(snapshot)
-            var voteKeys = [String]()
             for i in 0...(search.resultsReceived! - 1) {
                 let key = search.results!["businesses"][i]["id"].stringValue
                 search.votesReceived[key]! += snapshot.value![key] as! Int
-                voteKeys.append(key)
             }
-            print(voteKeys)
         })
     }
     
