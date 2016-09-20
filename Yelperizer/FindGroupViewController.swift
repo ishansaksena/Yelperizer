@@ -26,10 +26,21 @@ class FindGroupViewController: UIViewController, UITextFieldDelegate {
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
         // Check if valid data received for group code 
-        let results = UIStoryboard(name: "Main", bundle: nil) .
+        if groupCode.text?.characters.count == 20 {// Valid length
+            search.currentMode = mode.find
+            currentKey = groupCode.text!
+            let firebase = FireBaseManager()
+            firebase.getGroup()
+            let results = UIStoryboard(name: "Main", bundle: nil) .
             instantiateViewControllerWithIdentifier("ResultsTableViewController")
         
-        self.navigationController?.pushViewController(results, animated: true)
+            self.navigationController?.pushViewController(results, animated: true)
+        } else {// Invalid code entered
+            let message = "Please enter a valid code"
+            let alert = UIAlertController(title: "You're clownin'", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
         return false
     }
 

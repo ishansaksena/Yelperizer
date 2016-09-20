@@ -25,12 +25,31 @@ class FireBaseManager {
         self.ref.child("messages").removeObserverWithHandle(_refHandle)
     }
     
+    // Fetch search parameters and votes with the group ID
+    func getGroup() {
+        ref.child("groups").child(currentKey).observeSingleEventOfType(.Value, withBlock: { (snapshot) -> Void in
+            // Get search parameters
+            /*search.searchTerm = snapshot.value!["searchTerm"] as? String
+            search.limit = snapshot.value!["limit"] as? Int
+            search.location = snapshot.value!["location"] as? String
+            // ...
+            print(search)*/
+            print(snapshot)
+            yelpRouter.getData()
+        }) { (error) in
+            print(error.localizedDescription)
+        }
+        print("Done setting up")
+        let childUpdates = ["/wtf": "wtf"]
+        ref.updateChildValues(childUpdates)
+    }
+    
     // Set reference and set up listeners
     func configureDatabase() {
         ref = FIRDatabase.database().reference()
         
         // Listen for new messages in the Firebase database
-        _refHandle = self.ref.child("votes").observeEventType(.ChildAdded, withBlock: { (snapshot) -> Void in
+        _refHandle = self.ref.child("votes").observeEventType(.ChildChanged, withBlock: { (snapshot) -> Void in
             self.snaps.append(snapshot)
             print("Snapshot received")
             //print(self.snaps)
@@ -38,14 +57,13 @@ class FireBaseManager {
             var voteKeys = [String]()
             for i in 0...(search.resultsReceived! - 1) {
                 let key = search.results!["businesses"][i]["id"].stringValue
-                search.votesReceived[key]! += snapshot.value![voteKeys[0]] as! Int
+                search.votesReceived[key]! += snapshot.value![key] as! Int
                 voteKeys.append(key)
             }
             print(voteKeys)
-            print(snapshot.value![voteKeys[0]])
-            
         })
     }
+    
     
     // Rewrite votes in database
     func sendVotes() {

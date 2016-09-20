@@ -15,7 +15,6 @@ import UIKit
 class LocationViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var locationTextField: UITextField!
-    var yelpRouter: YelpRouter!
     override func viewDidLoad() {
         super.viewDidLoad()
 

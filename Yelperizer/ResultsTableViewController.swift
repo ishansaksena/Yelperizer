@@ -29,6 +29,8 @@ class ResultsTableViewController: UITableViewController {
                                                                                        action: #selector(ResultsTableViewController.code))
             search.currentMode = mode.none
             self.firebase.addGroup()
+        } else if (search.currentMode == mode.find) {
+            //firebase.getGroup()
         }
         
     }

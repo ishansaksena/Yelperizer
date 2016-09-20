@@ -11,6 +11,8 @@ import Alamofire
 import SwiftyJSON
 import AlamofireImage
 
+var yelpRouter: YelpRouter!
+
 class YelpRouter {
     // Mark: Oauth 2.0 and API calls
     // Remove before committing
